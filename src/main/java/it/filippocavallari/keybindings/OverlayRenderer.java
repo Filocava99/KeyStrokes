@@ -12,24 +12,14 @@ import java.util.Locale;
 public class OverlayRenderer {
 
     private final ClickManager clickManager;
+    private final HUD hud;
 
-    private final float scale = 0.4f;
-    private final int xOffset = (int) (50 * scale);
-    private final int yOffset = (int) (100 * scale);
-    private final int margin = (int) (6 * scale);
-    private final int quadSize = (int) (46 * scale);
-    private final int clickBoxWidth = (int) (72 * scale);
-    private final int quadPadding = quadSize / 3;
-    private final int jumpWidth = (int) (50 * scale);
-    private final int jumpHeight = (int) (5 * scale);
-    private final int jumpPadding = (int) ((150 / 2 * scale) - (jumpWidth / 2) - (margin / 2));
-    private final int clickPadding = (int) (clickBoxWidth / 6 * scale);
-    private final int sneakHeight = (int) (96 * scale);
-    private final float fontScale = 0.7f;
-
-    public OverlayRenderer(final ClickManager clickManager) {
+    public OverlayRenderer(final ClickManager clickManager, final HUD hud) {
         this.clickManager = clickManager;
+        this.hud = hud;
     }
+
+
 
     public void render() {
         beginRendering();
@@ -40,21 +30,21 @@ public class OverlayRenderer {
 
     private void renderGui() {
         //forward key
-        AbstractGui.fill(xOffset + margin + quadSize, yOffset, xOffset + margin + quadSize * 2, yOffset + quadSize, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset() + hud.getMargin() + hud.getQuadSize(), hud.getyOffset(), hud.getxOffset() + hud.getMargin() + hud.getQuadSize() * 2, hud.getyOffset() + hud.getQuadSize(), 0x1f888888);
         //left key
-        AbstractGui.fill(xOffset, yOffset + margin + quadSize, xOffset + quadSize, yOffset + margin + quadSize * 2, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize(), hud.getxOffset() + hud.getQuadSize(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize() * 2, 0x1f888888);
         //backward key
-        AbstractGui.fill(xOffset + margin + quadSize, yOffset + margin + quadSize, xOffset + margin + quadSize * 2, yOffset + margin + quadSize * 2, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset() + hud.getMargin() + hud.getQuadSize(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize(), hud.getxOffset() + hud.getMargin() + hud.getQuadSize() * 2, hud.getyOffset() + hud.getMargin() + hud.getQuadSize() * 2, 0x1f888888);
         //right key
-        AbstractGui.fill(xOffset + margin * 2 + quadSize * 2, yOffset + margin + quadSize, xOffset + margin * 2 + quadSize * 3, yOffset + margin + quadSize * 2, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2, hud.getyOffset() + hud.getMargin() + hud.getQuadSize(), hud.getxOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 3, hud.getyOffset() + hud.getMargin() + hud.getQuadSize() * 2, 0x1f888888);
         //LMP
-        AbstractGui.fill(xOffset, yOffset + margin * 2 + quadSize * 2, xOffset + clickBoxWidth, yOffset + margin * 2 + quadSize * 3, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset(), hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2, hud.getxOffset() + hud.getClickBoxWidth(), hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 3, 0x1f888888);
         //RMP
-        AbstractGui.fill(xOffset + margin + clickBoxWidth, yOffset + margin * 2 + quadSize * 2, xOffset + margin + clickBoxWidth * 2, yOffset + margin * 2 + quadSize * 3, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset() + hud.getMargin() + hud.getClickBoxWidth(), hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2, hud.getxOffset() + hud.getMargin() + hud.getClickBoxWidth() * 2, hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 3, 0x1f888888);
         //space bar
-        AbstractGui.fill(xOffset, yOffset + margin * 3 + quadSize * 3, xOffset + margin * 2 + quadSize * 3, yOffset + margin * 3 + quadSize * 4, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset(), hud.getyOffset() + hud.getMargin() * 3 + hud.getQuadSize() * 3, hud.getxOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 3, hud.getyOffset() + hud.getMargin() * 3 + hud.getQuadSize() * 4, 0x1f888888);
         //sneak
-        AbstractGui.fill(xOffset + margin * 2 + clickBoxWidth * 2, yOffset + margin * 2 + quadSize * 2, xOffset + margin * 2 + clickBoxWidth * 2 + quadSize, yOffset + margin * 2 + quadSize * 2 + sneakHeight, 0x1f888888);
+        AbstractGui.fill(hud.getxOffset() + hud.getMargin() * 2 + hud.getClickBoxWidth() * 2, hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2, hud.getxOffset() + hud.getMargin() * 2 + hud.getClickBoxWidth() * 2 + hud.getQuadSize(), hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getSneakHeight(), 0x1f888888);
     }
 
     private void renderFonts() {
@@ -71,37 +61,37 @@ public class OverlayRenderer {
         final FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
         //forward
         int color = gameSettings.keyBindForward.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(forwardKey, xOffset + margin + quadSize + quadPadding, yOffset + quadPadding, color);
+        fontRenderer.drawString(forwardKey, hud.getxOffset() + hud.getMargin() + hud.getQuadSize() + hud.getQuadPadding(), hud.getyOffset() + hud.getQuadPadding(), color);
         //backward
         color = gameSettings.keyBindBack.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(backwardKey, xOffset + margin + quadSize + quadPadding, yOffset + margin + quadSize + quadPadding, color);
+        fontRenderer.drawString(backwardKey, hud.getxOffset() + hud.getMargin() + hud.getQuadSize() + hud.getQuadPadding(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize() + hud.getQuadPadding(), color);
         //left
         color = gameSettings.keyBindLeft.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(leftKey, xOffset + quadPadding, yOffset + margin + quadSize + quadPadding, color);
+        fontRenderer.drawString(leftKey, hud.getxOffset() + hud.getQuadPadding(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize() + hud.getQuadPadding(), color);
         //right
         color = gameSettings.keyBindRight.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(rightKey, xOffset + margin * 2 + quadSize * 2 + quadPadding, yOffset + margin + quadSize + quadPadding, color);
+        fontRenderer.drawString(rightKey, hud.getxOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getQuadPadding(), hud.getyOffset() + hud.getMargin() + hud.getQuadSize() + hud.getQuadPadding(), color);
         //jump
         color = gameSettings.keyBindJump.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        AbstractGui.fill(xOffset + jumpPadding, yOffset + margin * 3 + quadSize * 3 + quadPadding, xOffset + jumpPadding + jumpWidth, yOffset + margin * 3 + quadSize * 3 + quadPadding + jumpHeight, color);
+        AbstractGui.fill(hud.getxOffset() + hud.getJumpPadding(), hud.getyOffset() + hud.getMargin() * 3 + hud.getQuadSize() * 3 + hud.getQuadPadding(), hud.getxOffset() + hud.getJumpPadding() + hud.getJumpWidth(), hud.getyOffset() + hud.getMargin() * 3 + hud.getQuadSize() * 3 + hud.getQuadPadding() + hud.getJumpHeight(), color);
         //lmb
         color = gameSettings.keyBindAttack.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(attackKey, xOffset + clickPadding * 3, yOffset + margin * 2 + quadSize * 2 + clickPadding, color);
+        fontRenderer.drawString(attackKey, hud.getxOffset() + hud.getClickPadding() * 3, hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getClickPadding(), color);
         //rmb
         color = gameSettings.keyBindUseItem.isKeyDown() ? 0xFFFFd700 : 0xFF000000;
-        fontRenderer.drawString(useKey, xOffset + margin + clickBoxWidth + clickPadding * 3, yOffset + margin * 2 + quadSize * 2 + clickPadding, color);
-        setRenderScale(fontScale);
+        fontRenderer.drawString(useKey, hud.getxOffset() + hud.getMargin() + hud.getClickBoxWidth() + hud.getClickPadding() * 3, hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getClickPadding(), color);
+        setRenderScale(hud.getFontScale());
         //lcps
         int attackClicks = clickManager.getClicks(gameSettings.keyBindAttack.getKey().getKeyCode());
         color = getColor(attackClicks);
-        fontRenderer.drawString(attackClicks + " CPS", (xOffset + clickPadding * 2) / fontScale, (yOffset + margin * 2 + quadSize * 2 + quadPadding * 2) / fontScale, color);
+        fontRenderer.drawString(attackClicks + " CPS", (hud.getxOffset() + hud.getClickPadding() * 2) / hud.getFontScale(), (hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getQuadPadding() * 2) / hud.getFontScale(), color);
         //rcps
         int useClicks = clickManager.getClicks(gameSettings.keyBindUseItem.getKey().getKeyCode());
         color = getColor(useClicks);
-        fontRenderer.drawString(useClicks + " CPS", (xOffset + margin + clickBoxWidth + clickPadding * 2) / fontScale, (yOffset + margin * 2 + quadSize * 2 + quadPadding * 2) / fontScale, color);
+        fontRenderer.drawString(useClicks + " CPS", (hud.getxOffset() + hud.getMargin() + hud.getClickBoxWidth() + hud.getClickPadding() * 2) / hud.getFontScale(), (hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getQuadPadding() * 2) / hud.getFontScale(), color);
         //sneak
         color = Minecraft.getInstance().player.isCrouching() ? 0xFFFFd700 : 0xFF000000;
-        drawVerticalString(fontRenderer, "SNEAK", (int) ((xOffset + margin * 2 + clickBoxWidth * 2 + quadPadding) / fontScale), (int) ((yOffset + margin * 2 + quadSize * 2 + quadPadding) / fontScale), color);
+        drawVerticalString(fontRenderer, "SNEAK", (int) ((hud.getxOffset() + hud.getMargin() * 2 + hud.getClickBoxWidth() * 2 + hud.getQuadPadding()) / hud.getFontScale()), (int) ((hud.getyOffset() + hud.getMargin() * 2 + hud.getQuadSize() * 2 + hud.getQuadPadding()) / hud.getFontScale()), color);
         clearScale();
     }
 
@@ -143,7 +133,7 @@ public class OverlayRenderer {
     }
 
     private void drawVerticalString(final FontRenderer fontRenderer, final String string, final int x, final int y, final int color){
-        final float fontSize = 11 * fontScale;
+        final float fontSize = 11 * hud.getFontScale();
         final char[] chars = string.toCharArray();
         for(int i = 0; i < chars.length; i++){
             fontRenderer.drawString(chars[i]+"", x, y + fontSize * i, color);
