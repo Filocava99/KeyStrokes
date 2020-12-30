@@ -19,8 +19,6 @@ public class OverlayRenderer {
         this.hud = hud;
     }
 
-
-
     public void render() {
         beginRendering();
         renderGui();
