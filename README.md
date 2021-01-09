@@ -5,7 +5,7 @@ To move the HUD press RIGHT-SHIFT and then drag and drop it; when you are done p
 
 ![](https://i.imgur.com/oObUHe7.png)
 
-##TODOs
+## TODOs
 * Mod menu that allows the player to change:
     * transparency of the HUD
     * color of the HUD
