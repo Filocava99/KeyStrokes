@@ -11,8 +11,8 @@ public class ClickListener {
 
     private final ClickManager clickManager;
 
-    public ClickListener(final ClickManager clickManager) {
-        this.clickManager = clickManager;
+    public ClickListener() {
+        this.clickManager = ClickManager.get();
     }
 
     @SubscribeEvent

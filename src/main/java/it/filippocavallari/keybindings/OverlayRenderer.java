@@ -14,9 +14,9 @@ public class OverlayRenderer {
     private final ClickManager clickManager;
     private final HUD hud;
 
-    public OverlayRenderer(final ClickManager clickManager, final HUD hud) {
-        this.clickManager = clickManager;
-        this.hud = hud;
+    public OverlayRenderer() {
+        this.clickManager = ClickManager.get();
+        this.hud = HUD.get();
     }
 
     public void render() {

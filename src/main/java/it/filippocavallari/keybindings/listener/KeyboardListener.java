@@ -1,6 +1,5 @@
 package it.filippocavallari.keybindings.listener;
 
-import it.filippocavallari.keybindings.HUD;
 import it.filippocavallari.keybindings.gui.EmptyGui;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -11,16 +10,10 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class KeyboardListener {
 
-    private final HUD hud;
-
-    public KeyboardListener(HUD hud) {
-        this.hud = hud;
-    }
-
     @SubscribeEvent
     public void onKeyPressed(InputEvent.KeyInputEvent event){
         if(event.getAction() == 1 && event.getKey() == 344){
-            Minecraft.getInstance().displayGuiScreen(new EmptyGui(hud));
+            Minecraft.getInstance().displayGuiScreen(new EmptyGui());
         }
     }
 

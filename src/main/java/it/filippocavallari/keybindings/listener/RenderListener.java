@@ -1,7 +1,5 @@
 package it.filippocavallari.keybindings.listener;
 
-import it.filippocavallari.keybindings.ClickManager;
-import it.filippocavallari.keybindings.HUD;
 import it.filippocavallari.keybindings.OverlayRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -13,8 +11,8 @@ public class RenderListener {
 
     private final OverlayRenderer overlayRenderer;
 
-    public RenderListener(final ClickManager clickManager, final HUD hud) {
-        this.overlayRenderer = new OverlayRenderer(clickManager, hud);
+    public RenderListener() {
+        this.overlayRenderer = new OverlayRenderer();
     }
 
     @SubscribeEvent

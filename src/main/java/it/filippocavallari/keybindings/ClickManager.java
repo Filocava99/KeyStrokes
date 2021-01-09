@@ -9,7 +9,18 @@ import java.util.Map;
 
 public class ClickManager {
 
+    private static ClickManager clickManager;
+
     private final Map<Integer, Pair<Long,Integer>> clicks = new HashMap<>();
+
+    private ClickManager(){}
+
+    public static ClickManager get() {
+        if(clickManager == null){
+            clickManager = new ClickManager();
+        }
+        return clickManager;
+    }
 
     public void registerKeyPressed(final int keyCode){
         final Pair<Long, Integer> count = clicks.getOrDefault(keyCode, new Pair<>(Date.from(Instant.now()).getTime(),0));

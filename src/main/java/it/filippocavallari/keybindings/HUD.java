@@ -2,6 +2,8 @@ package it.filippocavallari.keybindings;
 
 public class HUD {
 
+    private static HUD hud;
+
     private float scale = 0.4f;
     private int xOffset = (int) (50 * scale);
     private int yOffset = (int) (100 * scale);
@@ -17,6 +19,15 @@ public class HUD {
     private float fontScale = 0.7f;
     private final int hudWidth = jumpWidth + margin + quadSize;
     private final int hudHeight = quadSize * 4 + margin * 3;
+
+    private HUD(){}
+
+    public static HUD get() {
+        if(hud == null){
+            hud = new HUD();
+        }
+        return hud;
+    }
 
     public float getScale() {
         return scale;
@@ -131,6 +142,7 @@ public class HUD {
     }
 
     public boolean isPointOnHUD(double x, double y){
-        return x >= xOffset && x <= xOffset+hudWidth && y >= yOffset && y <= yOffset+hudHeight;
+        System.out.println(x + "    " + y + "   " + xOffset + "     " + xOffset+hudWidth + "    " +  yOffset + "   " + yOffset+hudHeight);
+        return (x >= xOffset && x <= xOffset+hudWidth) && (y >= yOffset && y <= yOffset+hudHeight);
     }
 }
