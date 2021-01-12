@@ -11,3 +11,6 @@ To move the HUD press RIGHT-SHIFT and then drag and drop it; when you are done p
     * color of the HUD
     * colors of the CPS counters
 * Register a new keybinding for the drag-and-drop feature (currently set on R-SHIFT)
+
+### Notes
+That's my first Forge mod, the code may not be very efficient
